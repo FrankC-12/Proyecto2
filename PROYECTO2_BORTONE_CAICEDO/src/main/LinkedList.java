@@ -4,501 +4,326 @@
  */
 package main;
 
+import javax.swing.JOptionPane;
+
 /**
  *
  * @author giubo
  */
 public class LinkedList<T> {
 
-    private Nodo pFirst;
-    private Nodo pLast;
-    private int size;
+    private Node<T> head;
+    private Node<T> tail;
 
+    public Node<T> getHead() {
+        return this.head;
+    }
+
+    /**
+     * Constructor para inicializar una lista vacia
+     * @author Giulianna Bortone
+     */
     public LinkedList() {
-        this.pFirst = null;
-        this.pLast = null;
-        this.size = 0;
+        this.head = this.tail = null;
     }
 
     /**
-     * @return the pFirst
+     * Constructor para inicializar una lista con un nodo
+     * @author Giulianna Bortone
+     * @param n
      */
-    public Nodo getpFirst() {
-        return pFirst;
+    public LinkedList(Node<T> n) {
+        this.head = this.tail = n;
+    }
+
+    public void setHead(Node<T> head) {
+        this.head = head;
     }
 
     /**
-     * @param pFirst the pFirst to set
+     * Para saber si la lista esta vacia o no
+     * @author Giulianna Bortone
+     * @return
      */
-    public void setpFirst(Nodo pFirst) {
-        this.pFirst = pFirst;
+    private boolean isEmpty() {
+        return this.head == null;
     }
 
     /**
-     * @return the pLast
+     * Tamano de la lista
+     * @author Giulianna Bortone
+     * @return
      */
-    public Nodo getpLast() {
-        return pLast;
-    }
+    public int size() {
+        int i = 0;
 
-    /**
-     * @param pLast the pLast to set
-     */
-    public void setpLast(Nodo pLast) {
-        this.pLast = pLast;
-    }
-
-    /**
-     * @return the size
-     */
-    public int getSize() {
-        return size;
-    }
-
-    /**
-     * @param size the size to set
-     */
-    public void setSize(int size) {
-        this.size = size;
-    }
-
-    //PRIMITIVAS
-    public boolean isEmpty() {
-        return pFirst == null;
-    }
-
-    public void InitialInsert(T data) {
-        Nodo<T> nuevo = new Nodo(data);
         if (isEmpty()) {
-            pFirst = nuevo;
-            pLast = nuevo;
-        } else {
-            Nodo aux = pFirst;
-            nuevo.setPnext(aux);
-            pFirst = nuevo;
+            return 0;
         }
-        size += 1;
 
+        Node<T> aux = this.head;
+        while (aux != null) {
+            aux = aux.getNext();
+            i++;
+        }
+        return i;
     }
 
-    public void InitialInsertNodo(Nodo nodito) {
+    /**
+     * Para anadir el primero de la lista
+     * @author Giulianna Bortone
+     * @param datum Datum to be added
+     */
+    public void addFirst(T datum) {
+        Node<T> n = new Node(datum);
         if (isEmpty()) {
-            pFirst = nodito;
-            pLast = nodito;
+            this.head = n;
+            this.tail = n;
+            this.head.setNext(this.tail);
+            this.tail.setNext(null);
         } else {
-            Nodo aux = pFirst;
-            nodito.setPnext(aux);
-            pFirst = nodito;
-        }
-        size += 1;
-
-    }
-
-    public void InsertForIndex(T data, int pos) {
-        Nodo<T> nuevo = new Nodo(data);
-        Nodo aux = pFirst;
-
-        if (pos == 1 || isEmpty()) {
-            this.InitialInsert(data);
-
-        } else if (pos == size + 1) {
-            this.FinalInsert(data);
-
-        } else if (pos > size + 1) {
-            System.out.println("Posicion no valida");
-
-        } else {
-            if (SearchGetValue(pos) != null) {
-                this.DeleteForIndex(pos);
-            }
-            for (int i = 0; i < size; i++) {
-                if (getPosicion(aux.getPnext()) == pos) {
-                    nuevo.setPnext(aux.getPnext());
-                    aux.setPnext(nuevo);
-                    break;
-
-                } else {
-                    aux = aux.getPnext();
-                }
-            }
-            size++;
-
+            n.setNext(this.head);
+            this.head = n;
         }
     }
 
-    public int getPosicion(Nodo nodito) {
-        if (!isEmpty()) {
-            Nodo aux = pFirst;
-            int contador = 1;
-            while (aux != nodito) {
-                contador++;
-                aux = aux.getPnext();
-            }
-            return contador;
+    /**
+     * Para insertar al final de la lista
+     * @author Giulianna Bortone
+     * @param datum Datum to be added
+     */
+    public void addLast(T datum) {
+        Node<T> n = new Node(datum);
+        if (isEmpty()) {
+            this.head = n;
+            this.tail = n;
+            this.head.setNext(this.tail);
+            this.tail.setNext(null);
         } else {
-            return -1;
+            this.tail.setNext(n);
+            this.tail = n;
         }
     }
 
-    public Nodo getNodo(int pos) {
-        if (!isEmpty()) {
-            if (pos == size) {
-                return pLast;
-            } else if (pos == 1) {
-                return pFirst;
-            } else {
-                Nodo aux = pFirst;
-                for (int i = 0; i < pos - 1; i++) {
-                    aux = aux.getPnext();
-                }
-                return aux;
-            }
-
+    /**
+     * Para insertar en una posion especifica de la lista
+     * @author Giulianna Bortone
+     * @param datum Datum to be added
+     * @param i Position to be added in
+     */
+    public void add(T datum, int i) {
+        if (isEmpty() || i == 0) {
+            this.addFirst(datum);
+        } else if (i >= (size() - 1)) {
+            this.addLast(datum);
+        } else if (i < 0) {
+            this.add(datum, size() + i);
         } else {
+            Node<T> n = new Node(datum);
+            Node aux = this.head; // Nodo previo
+            int count = 0;
+            while (count < i - 1) {
+                aux = aux.getNext();
+                count++;
+            }
+            n.setNext(aux.getNext());
+            aux.setNext(n);
+        }
+    }
+
+    /**
+     * Para eliminar el primero de la lista
+     * @author Giulianna Bortone
+     * @return The data of the first element
+     */
+    public T deleteFirst() {
+        if (isEmpty()) {
             return null;
         }
+        Node<T> temp = this.head;
+        this.head = this.head.getNext();
+        temp.setNext(null);
+        return temp.getData();
     }
 
-    public T SearchGetValue(int pos) {
-        if (!isEmpty() && pos <= size && pos > 0) {
-            Nodo aux = pFirst;
-            while (aux != null) {
-                if (getPosicion(aux) == pos) {
-                    return (T) aux.getDato();
-
-                } else {
-                    aux = aux.getPnext();
-                }
-            }
-        } else {
-            System.out.println("La lista esta vacia o la posicion no es valida");
-        }
-        return null;
-    }
-
-    public int SearchGetIndex(T valor) {
-        boolean encontrado = false;
-        int index = 0;
-        if (!isEmpty()) {
-            Nodo aux = pFirst;
-            Nodo temp = pLast;
-            if (aux.getDato() == valor && aux == pFirst) {
-                encontrado = true;
-                index = 1;
-
-            } else if (temp.getDato() == valor) {
-                encontrado = true;
-                index = size;
-
-            } else {
-                for (int i = 0; i < size - 1; i++) {
-                    if (aux.getDato() == valor) {
-                        encontrado = true;
-                        index = i + 1;
-                        break;
-
-                    } else {
-                        aux = aux.getPnext();
-                    }
-                }
-            }
-
-        } else {
-            System.out.println("La lista esta vacia");
-            index = -1;
-
-        }
-        if (encontrado == false) {
-            System.out.println("El numero no esta en la 9lista");
-            index = -1;
-        }
-        return index;
-    }
-
-    public void FinalInsert(T data) {
-        Nodo<T> nuevo = new Nodo(data);
+    /**
+     * Deletes last element of the list
+     * @author Giulianna Bortone
+     * @return The data of the last element
+     */
+    public T deleteLast() {
         if (isEmpty()) {
-            pFirst = nuevo;
-            pLast = nuevo;
-        } else {
-            Nodo aux = pLast;
-            aux.setPnext(nuevo);
-            pLast = nuevo;
+            return null;
         }
-        size += 1;
+        Node<T> pre = this.head;
+        while (pre.getNext().getNext() != null) {
+            pre = pre.getNext();
+        }
+        Node<T> temp = pre.getNext();
+        pre.setNext(null);
+        this.tail = pre;
+        temp.setNext(null);
+        return temp.getData();
 
     }
 
-    public void FinalInsertNodo(Nodo nodito) {
+    /**
+     * Deletes the element at the specified position
+     *
+     * @param i The position to be deleted
+     * @return The data of the deleted element
+     */
+    public T delete(int i) {
         if (isEmpty()) {
-            pFirst = nodito;
-            pLast = nodito;
+            return null;
+        } else if (i == 0) {
+            return deleteFirst();
+        } else if (i == size() - 1) {
+            return deleteLast();
+        } else if (i < 0) {
+            return delete(size() + i);
+        } else if (i > size() - 1) {
+            System.out.println("\nError");
+            return null;
         } else {
-            Nodo aux = pLast;
-            aux.setPnext(nodito);
-            pLast = nodito;
+            Node<T> aux = this.head;
+            int count = 0;
+            while (count < i - 1) {
+                aux = aux.getNext();
+                count++;
+            }
+            Node<T> del = aux.getNext();
+            aux.setNext(del.getNext());
+            del.setNext(null);
+            return del.getData();
         }
-        size += 1;
-
     }
 
+    /**
+     * Prints the list in a pretty format
+     */
     public void print() {
         if (isEmpty()) {
-            System.out.println("La lista esta vacia");
-
+            System.out.println("Vacia");
         } else {
-            Nodo aux = pFirst;
-            for (int i = 0; i < size; i++) {
-                System.out.print(aux.getDato() + " ");
-                aux = aux.getPnext();
+            Node aux = this.head;
+            int i = 0;
+            while (aux != null) {
+                System.out.print(aux.getData() + "(" + i + ")" + " -> ");
+                aux = aux.getNext();
+                i++;
+            }
+            System.out.println("");
+        }
+    }
+
+//splitting list into two halves
+    public Node[] splitList(Node n) {
+        // base case
+        if (n == null || n.getNext() == null) {
+            return new Node[]{n, null};
+        }
+
+        Node backward = n;
+        Node forward = n.getNext();
+
+        // Forward moves twice and backward moves once
+        while (forward != null) {
+            forward = forward.getNext();
+            if (forward != null) {
+                backward = backward.getNext();
+                forward = forward.getNext();
             }
         }
 
+        // splitting the linked list
+        Node[] arr = new Node[]{n, backward.getNext()};
+        backward.setNext(null);
+
+        return arr;
     }
 
-    public void DeleteInicio() {
-        if (!isEmpty()) {
-            if (size == 1) {
-                pFirst = null;
-                pLast = null;
-                size = 0;
-            } else {
-                pFirst = pFirst.getPnext();
-                size--;
-            }
+    /**
+     * Gets the data of the element at the given index
+     *
+     * @param index index of the element to look for
+     * @return Data of the element at given index
+     */
+    public T get(int index) {
+        Node<T> aux = this.head;
+        int count = 0;
+        while (count < index) {
+            aux = aux.getNext();
+            count++;
+        }
 
+        return aux.getData();
+    }
+
+    /**
+     * Replaces the first node of the list with another
+     *
+     * @param datum data to be replaced in the first node
+     */
+    public void setFirst(T datum) {
+        if (isEmpty()) {
+            addFirst(datum);
         } else {
-            System.out.println("La lista esta vacia");
+            Node<T> n = new Node(datum);
+            n.setNext(this.head.getNext());
+            this.head.setNext(null);
+            this.head = n;
         }
     }
 
-    public void DeleteFinal() {
-        if (!isEmpty()) {
-            Nodo aux = pFirst;
-            if (size == 1) {
-                pFirst = null;
-                pLast = null;
-                size = 0;
-            } else {
-                for (int i = 0; i < size; i++) {
-                    if (aux.getPnext() == pLast) {
-                        pLast = aux;
-                        aux.setPnext(null);
-                        size--;
-                        break;
-                    } else {
-                        aux = aux.getPnext();
-                    }
-                }
-            }
+    /**
+     * Replaces the last node of the list with another
+     *
+     * @param datum data to be replaced in the last node
+     */
+    public void setLast(T datum) {
+        Node<T> n = new Node(datum);
+        Node<T> pre = this.head;
+        while (pre.getNext().getNext() != null) {
+            pre = pre.getNext();
+        }
 
+        Node<T> temp = pre.getNext();
+        pre.setNext(n);
+        this.tail = n;
+        temp.setNext(null);
+    }
+
+    /**
+     * Replaces the node at the given index with another containing the given
+     * data
+     *
+     * @param i index of the node to be replaced
+     * @param datam data that will contain the node to replace with
+     */
+    public void set(int i, T datum) {
+        if (isEmpty() || i == 0) {
+            setFirst(datum);
+        } else if (i == size() - 1) {
+            setLast(datum);
+        } else if (i < 0) {
+            set(size() + i, datum);
+        } else if (i > size() - 1) {
+            System.out.println("\nError");
         } else {
-            System.out.println("La lista esta vacia");
-
-        }
-    }
-
-    public void DeleteValue(T data) {
-        if (!isEmpty()) {
-            boolean encontrado = false;
-            Nodo aux = pFirst;
-            if (pFirst.getDato() == data) {
-                encontrado = true;
-                this.DeleteInicio();
-            } else if (pLast.getDato() == data) {
-                encontrado = true;
-                this.DeleteFinal();
-            } else {
-                for (int i = 0; i < size - 1; i++) {
-                    if (aux.getPnext().getDato() == data) {
-                        Nodo siguiente = aux.getPnext().getPnext();
-                        aux.setPnext(siguiente);
-                        encontrado = true;
-                        size--;
-                        break;
-                    } else {
-                        aux = aux.getPnext();
-                    }
-                }
-
+            Node<T> n = new Node(datum);
+            Node<T> aux = this.head;
+            int count = 0;
+            while (count < i - 1) {
+                aux = aux.getNext();
+                count++;
             }
-            if (encontrado == false) {
-                System.out.println("El numero no esta en la lista");
-            }
-        } else {
-            System.out.println("La lista esta vacia");
 
+            Node<T> toReplace = aux.getNext();
+            n.setNext(toReplace.getNext());
+            aux.setNext(n);
+            toReplace.setNext(null);
         }
-    }
-
-    public void DeleteForIndex(int pos) {
-        boolean encontrado = false;
-        Nodo aux = pFirst;
-        if (!isEmpty()) {
-            if (pos == 1) {
-                encontrado = true;
-                this.DeleteInicio();
-            } else if (pos == size) {
-                encontrado = true;
-                this.DeleteFinal();
-            } else {
-                for (int i = 0; i < size - 1; i++) {
-                    if (SearchGetIndex((T) aux.getPnext().getDato()) == pos) {
-                        aux.setPnext(aux.getPnext().getPnext());
-                        encontrado = true;
-                        size--;
-                        break;
-                    } else {
-                        aux = aux.getPnext();
-                    }
-                }
-            }
-        } else {
-            System.out.println("La lista esta vacia");
-        }
-        if (encontrado == false) {
-            System.out.println("Ingrese una posicion valida");
-        }
-    }
-
-    public void SortMinorToMajor() {  //ordena de menor a mayor
-
-        Nodo aux1 = pFirst;
-
-        for (int i = 1; i < size; i++) {
-            T dato1 = (T) aux1.getDato();
-            Nodo aux2 = aux1.getPnext();
-            while (aux2 != null) {
-                T dato2 = (T) aux2.getDato();
-                if ((int) dato1 > (int) dato2) {
-                    IntercambiarNodoSegunNodo(aux1, aux2);
-                    dato1 = (T) aux1.getDato();
-                }
-                aux2 = aux2.getPnext();
-            }
-            aux1 = aux1.getPnext();
-        }
-    }
-
-    public void SortMajorToMinor() {
-
-        Nodo aux1 = pFirst;
-
-        for (int i = 1; i < size; i++) {
-            T dato1 = (T) aux1.getDato();
-            Nodo aux2 = aux1.getPnext();
-            while (aux2 != null) {
-                T dato2 = (T) aux2.getDato();
-                if ((int) dato1 < (int) dato2) {
-                    IntercambiarNodoSegunNodo(aux1, aux2);
-                    dato1 = (T) aux1.getDato();
-                }
-                aux2 = aux2.getPnext();
-            }
-            aux1 = aux1.getPnext();
-        }
-    }
-
-    public void BurbbleSort() {
-        if (!isEmpty()) {
-            Nodo actual = pFirst;
-            Nodo temp;
-            Nodo siguiente = actual.getPnext();
-            for (int i = 0; i < size; i++) {
-                if ((int) actual.getDato() > (int) siguiente.getDato()) {
-                    temp = actual;
-                    actual.setDato(siguiente);
-                    siguiente.setDato(temp);
-                    actual = actual.getPnext();
-
-                } else {
-                    actual = actual.getPnext();
-                }
-
-            }
-        }
-    }
-
-    public void SortListMinorToMajor() {
-        if (!this.isEmpty()) {
-            Nodo aux = ExtraerNodo((T) BuscarMayor().getDato());
-            SortListMinorToMajor();
-            FinalInsertNodo(aux);
-
-        }
-    }
-
-    public void SortListMajorToMinor() {
-        if (!this.isEmpty()) {
-            Nodo aux = ExtraerNodo((T) BuscarMayor().getDato());
-            SortListMajorToMinor();
-            InitialInsertNodo(aux);
-
-        }
-    }
-
-    public Nodo ExtraerNodo(T value) {
-        Nodo aux = pFirst;
-        Nodo aux2 = pLast;
-        Nodo nodito = null;
-        if (!isEmpty()) {
-            if (aux.getDato() == value) {
-                nodito = pFirst;
-                this.DeleteInicio();
-            } else if (aux2.getDato() == value) {
-                nodito = pLast;
-                this.DeleteFinal();
-            } else {
-                for (int i = 0; i < size - 1; i++) {
-                    if (aux.getDato() == value) {
-                        nodito = aux;
-                        this.DeleteForIndex(getPosicion(aux));
-                        break;
-                    } else {
-                        aux = aux.getPnext();
-                    }
-                }
-            }
-        } else {
-            System.out.println("La lista esta vacia");
-        }
-        return nodito;
-    }
-
-    public Nodo BuscarMayor() {
-        Nodo aux1 = pFirst;
-        Nodo mayor = pFirst;
-        if (!isEmpty()) {
-            for (int i = 0; i < size; i++) {
-                if ((int) aux1.getDato() > (int) mayor.getDato()) {
-                    mayor = aux1;
-                }
-                aux1 = aux1.getPnext();
-            }
-        } else {
-            System.out.println("La lista esta vacia");
-
-        }
-
-        return mayor;
-
-    }
-
-    public void IntercambiarNodoSegunNodo(Nodo a, Nodo b) {    //intercambia el cotenido de dos nodos, debemos pasarle los dos nodos a los que queremos intercambiar el contenido
-
-        T dato = (T) a.getDato();
-        a.setDato(b.getDato());
-        b.setDato(dato);
-    }
-
-    public void IntercambiarNodoSegunIndice(int a, int b) {    //intercambia el contenido de dos nos dado el indice de estos dentro de la lista
-
-        Nodo auxiliar1 = getNodo(a);
-        Nodo auxiliar2 = getNodo(b);
-
-        T dato = (T) auxiliar1.getDato();
-        auxiliar1.setDato(auxiliar2.getDato());
-        auxiliar2.setDato(dato);
     }
 
 }

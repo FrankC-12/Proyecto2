@@ -17,10 +17,10 @@ public class Main {
     public static void main(String[] args) {
         ReadFile reader = new ReadFile();
         Summary resumen= reader.readFile();
-        HashTable nuevo = new HashTable();
-        System.out.println(resumen.getTittle().getClass());
-        System.out.println(nuevo.hashCode(resumen.getTittle()));
-       
+        HashTable<String, Summary> nuevo = new HashTable();
+      
+        nuevo.add("Hola", resumen);
+        System.out.println(nuevo.size());
         
     }
     
