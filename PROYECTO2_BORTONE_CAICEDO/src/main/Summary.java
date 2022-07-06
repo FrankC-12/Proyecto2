@@ -9,7 +9,7 @@ package main;
  * @author giubo
  */
 public class Summary {
-
+    
     private String tittle;
     private String autores[];
     private String cuerpo;
@@ -77,6 +77,38 @@ public class Summary {
     public void setKey_words(String[] key_words) {
         this.key_words = key_words;
     }
+
+    public int [] analizar() {
+        int contador = 0;
+        int cantidad = 0;
+        int cantidad_key_words[] = new int[this.key_words.length];
+        String resume[] = this.cuerpo.split("");
+        for (String x : this.key_words) {
+            System.out.println(x);
+            for (String y : resume) {
+                if (y.equals(x)) 
+                    System.out.println("");{
+                    cantidad++;
+                   
+                    cantidad_key_words[contador] = cantidad;
+                 
+
+                }
+
+            }
+            contador = contador + 1;
+            cantidad = 0;
+        }
+
+        return cantidad_key_words;
+    }
     
     
+    public void search_for_autor (String autor ){
+          HashTable<String, Summary> HashTableAutores = new HashTable();
+          
+          
+          
+    }
 }
+

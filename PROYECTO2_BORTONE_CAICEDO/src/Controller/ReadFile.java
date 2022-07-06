@@ -9,6 +9,8 @@ import java.io.File;
 import java.io.FileReader;
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
+import main.HashTable;
+import main.LinkedList;
 import main.Summary;
 
 /**
@@ -17,7 +19,13 @@ import main.Summary;
  */
 public class ReadFile {
 
-    public Summary readFile() {
+    private LinkedList autores = new LinkedList();
+    public static HashTable<String, Summary> nuevo = new HashTable();
+    public static HashTable< String, Summary> autorcito = new HashTable();
+    public static HashTable<String[], Summary> keywords = new HashTable();
+
+    public void readFile() {
+
         String line;
         String data = "";
         String autors = "";
@@ -66,15 +74,27 @@ public class ReadFile {
 
                 if ((!"".equals(autors)) && (!"".equals(data))) {
                     String[] split_autores = autors.split("Autores");
+
                     String[] split_autores_final = split_autores[1].split("\n");
+
                     String[] split_data = data.split("Palabras claves:");
+
                     String[] split_data_final = split_data[0].split("Resumen");
+
                     String[] split_key_words = split_data[1].split(",");
 
                     try {
                         Summary resumen = new Summary(tittle, split_autores_final, split_data_final[1], split_key_words);
-                        return resumen;
-                       
+
+                        nuevo.add(resumen.getTittle(), resumen);
+                        keywords.add(resumen.getKey_words(), resumen);
+
+                        for (String r : resumen.getAutores()) {
+                            autorcito.add(r, resumen);
+                        }
+
+                        this.autores.addLast(resumen.getAutores());
+                        System.out.println(autores.getHead());
 
                     } catch (Exception e) {
                         JOptionPane.showMessageDialog(null, "Error al guardar los datos ");
@@ -88,7 +108,21 @@ public class ReadFile {
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null, "Ocurrio un error al leer el txt" + e);
         }
-        return null;
+
+    }
+
+    /**
+     * @return the autores
+     */
+    public LinkedList getAutores() {
+        return autores;
+    }
+
+    /**
+     * @param autores the autores to set
+     */
+    public void setAutores(LinkedList autores) {
+        this.autores = autores;
     }
 
 }

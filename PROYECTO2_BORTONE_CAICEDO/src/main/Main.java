@@ -3,8 +3,12 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Main.java to edit this template
  */
 package main;
+
 import Controller.Controller;
 import Controller.ReadFile;
+import Ventana.Menu;
+import javax.swing.JOptionPane;
+
 /**
  *
  * @author giubo
@@ -15,13 +19,13 @@ public class Main {
      * @param args the command line arguments
      */
     public static void main(String[] args) {
-        ReadFile reader = new ReadFile();
-        Summary resumen= reader.readFile();
-        HashTable<String, Summary> nuevo = new HashTable();
-      
-        nuevo.add("Hola", resumen);
-        System.out.println(nuevo.size());
+        Menu fw = new Menu();
+        fw.setVisible(true);
         
+        
+       
+        
+
     }
-    
+
 }

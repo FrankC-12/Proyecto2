@@ -21,6 +21,7 @@ public class LinkedList<T> {
 
     /**
      * Constructor para inicializar una lista vacia
+     *
      * @author Giulianna Bortone
      */
     public LinkedList() {
@@ -29,6 +30,7 @@ public class LinkedList<T> {
 
     /**
      * Constructor para inicializar una lista con un nodo
+     *
      * @author Giulianna Bortone
      * @param n
      */
@@ -42,6 +44,7 @@ public class LinkedList<T> {
 
     /**
      * Para saber si la lista esta vacia o no
+     *
      * @author Giulianna Bortone
      * @return
      */
@@ -51,6 +54,7 @@ public class LinkedList<T> {
 
     /**
      * Tamano de la lista
+     *
      * @author Giulianna Bortone
      * @return
      */
@@ -71,6 +75,7 @@ public class LinkedList<T> {
 
     /**
      * Para anadir el primero de la lista
+     *
      * @author Giulianna Bortone
      * @param datum Datum to be added
      */
@@ -89,6 +94,7 @@ public class LinkedList<T> {
 
     /**
      * Para insertar al final de la lista
+     *
      * @author Giulianna Bortone
      * @param datum Datum to be added
      */
@@ -107,6 +113,7 @@ public class LinkedList<T> {
 
     /**
      * Para insertar en una posion especifica de la lista
+     *
      * @author Giulianna Bortone
      * @param datum Datum to be added
      * @param i Position to be added in
@@ -133,6 +140,7 @@ public class LinkedList<T> {
 
     /**
      * Para eliminar el primero de la lista
+     *
      * @author Giulianna Bortone
      * @return The data of the first element
      */
@@ -147,7 +155,8 @@ public class LinkedList<T> {
     }
 
     /**
-     * Deletes last element of the list
+     * Para eliminar el ultimo de la lista
+     *
      * @author Giulianna Bortone
      * @return The data of the last element
      */
@@ -168,8 +177,9 @@ public class LinkedList<T> {
     }
 
     /**
-     * Deletes the element at the specified position
+     * Para eliminar de una posicion especifica
      *
+     * @author Giulianna Bortone
      * @param i The position to be deleted
      * @return The data of the deleted element
      */
@@ -200,7 +210,7 @@ public class LinkedList<T> {
     }
 
     /**
-     * Prints the list in a pretty format
+     * @author Giulianna Bortone Imprime la lista
      */
     public void print() {
         if (isEmpty()) {
@@ -217,7 +227,6 @@ public class LinkedList<T> {
         }
     }
 
-//splitting list into two halves
     public Node[] splitList(Node n) {
         // base case
         if (n == null || n.getNext() == null) {
@@ -227,7 +236,6 @@ public class LinkedList<T> {
         Node backward = n;
         Node forward = n.getNext();
 
-        // Forward moves twice and backward moves once
         while (forward != null) {
             forward = forward.getNext();
             if (forward != null) {
@@ -244,8 +252,9 @@ public class LinkedList<T> {
     }
 
     /**
-     * Gets the data of the element at the given index
+     * Obtenemos la data de un elemento dado su index
      *
+     * @author Giulianna Bortone
      * @param index index of the element to look for
      * @return Data of the element at given index
      */
@@ -261,8 +270,9 @@ public class LinkedList<T> {
     }
 
     /**
-     * Replaces the first node of the list with another
+     * Reemplaza el primer nodo de la lista con otro
      *
+     * @author Giulianna Bortone
      * @param datum data to be replaced in the first node
      */
     public void setFirst(T datum) {
@@ -277,8 +287,9 @@ public class LinkedList<T> {
     }
 
     /**
-     * Replaces the last node of the list with another
+     * Reemplaza el primer nodo de la lista con otro
      *
+     * @author Giulianna Bortone
      * @param datum data to be replaced in the last node
      */
     public void setLast(T datum) {
@@ -295,9 +306,9 @@ public class LinkedList<T> {
     }
 
     /**
-     * Replaces the node at the given index with another containing the given
-     * data
+     * Reemplaza el nodo del indice dado por otro dada la data
      *
+     * @author Giulianna Bortone
      * @param i index of the node to be replaced
      * @param datam data that will contain the node to replace with
      */
