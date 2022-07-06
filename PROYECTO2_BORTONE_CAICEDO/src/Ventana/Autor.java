@@ -5,12 +5,13 @@
 package Ventana;
 
 import Controller.ReadFile;
-import static Ventana.Menu.reader;
+import static Ventana.MenuMain.reader;
 import javax.swing.JComboBox;
 import javax.swing.JOptionPane;
 import main.LinkedList;
 import main.Node;
 import static Controller.ReadFile.autorcito;
+import java.awt.Menu;
 import main.HashNode;
 import main.Summary;
 
@@ -51,6 +52,7 @@ public class Autor extends javax.swing.JFrame {
         body = new javax.swing.JTextPane();
         jLabel4 = new javax.swing.JLabel();
         jLabel5 = new javax.swing.JLabel();
+        l = new javax.swing.JButton();
         jLabel3 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -109,9 +111,17 @@ public class Autor extends javax.swing.JFrame {
         jLabel5.setText("Investigaciones del autor:");
         jPanel1.add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 240, -1, -1));
 
-        jLabel3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Ventana/librosversionfinal.jpg"))); // NOI18N
+        l.setText("Volver al menu");
+        l.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                lActionPerformed(evt);
+            }
+        });
+        jPanel1.add(l, new org.netbeans.lib.awtextra.AbsoluteConstraints(340, 440, -1, -1));
+
+        jLabel3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/librosversionfinal.jpg"))); // NOI18N
         jLabel3.setText("jLabel3");
-        jPanel1.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, 490));
+        jPanel1.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 810, 490));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -166,8 +176,14 @@ public class Autor extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton2ActionPerformed
 
     private void combo1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_combo1ActionPerformed
-        // TODO add your handling code here:
+      
     }//GEN-LAST:event_combo1ActionPerformed
+
+    private void lActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_lActionPerformed
+        MenuMain menu = new MenuMain();
+        this.setVisible(false);
+        menu.setVisible(true);
+    }//GEN-LAST:event_lActionPerformed
 
     /**
      * @param args the command line arguments
@@ -222,5 +238,6 @@ public class Autor extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel5;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane2;
+    private javax.swing.JButton l;
     // End of variables declaration//GEN-END:variables
 }

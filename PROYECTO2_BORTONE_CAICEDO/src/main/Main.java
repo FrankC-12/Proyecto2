@@ -6,7 +6,7 @@ package main;
 
 import Controller.Controller;
 import Controller.ReadFile;
-import Ventana.Menu;
+import Ventana.MenuMain;
 import javax.swing.JOptionPane;
 
 /**
@@ -19,7 +19,7 @@ public class Main {
      * @param args the command line arguments
      */
     public static void main(String[] args) {
-        Menu fw = new Menu();
+        MenuMain fw = new MenuMain();
         fw.setVisible(true);
         
         
