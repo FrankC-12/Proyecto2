@@ -22,7 +22,8 @@ public class ReadFile {
     private LinkedList autores = new LinkedList();
     public static HashTable<String, Summary> nuevo = new HashTable();
     public static HashTable< String, Summary> autorcito = new HashTable();
-    public static HashTable<String[], Summary> keywords = new HashTable();
+    public static HashTable<String, Summary> keywords = new HashTable();
+    private LinkedList claves = new LinkedList();
 
     public void readFile() {
 
@@ -87,20 +88,27 @@ public class ReadFile {
                         Summary resumen = new Summary(tittle, split_autores_final, split_data_final[1], split_key_words);
 
                         nuevo.add(resumen.getTittle(), resumen);
-                        keywords.add(resumen.getKey_words(), resumen);
-
+                        
+                          
+                        for (String p : resumen.getKey_words()) {
+                            keywords.add(p, resumen);
+                        }
+                        
                         for (String r : resumen.getAutores()) {
                             autorcito.add(r, resumen);
                         }
 
                         this.autores.addLast(resumen.getAutores());
-                        System.out.println(autores.getHead());
+                        this.getClaves().addLast(resumen.getKey_words());
+                       
+                        
 
                     } catch (Exception e) {
                         JOptionPane.showMessageDialog(null, "Error al guardar los datos ");
                     }
+                     
                 }
-
+                JOptionPane.showMessageDialog(null, "Resumen agregado con exito!");
                 br.close();
 
             }
@@ -123,6 +131,20 @@ public class ReadFile {
      */
     public void setAutores(LinkedList autores) {
         this.autores = autores;
+    }
+
+    /**
+     * @return the claves
+     */
+    public LinkedList getClaves() {
+        return claves;
+    }
+
+    /**
+     * @param claves the claves to set
+     */
+    public void setClaves(LinkedList claves) {
+        this.claves = claves;
     }
 
 }

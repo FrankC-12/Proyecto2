@@ -65,6 +65,11 @@ public class MenuMain extends javax.swing.JFrame {
         buscar_por_clave.setBackground(new java.awt.Color(255, 153, 51));
         buscar_por_clave.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         buscar_por_clave.setText("Buscar Investigaciones por palabra clave");
+        buscar_por_clave.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                buscar_por_claveActionPerformed(evt);
+            }
+        });
         jPanel1.add(buscar_por_clave, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 310, -1, -1));
 
         jButton3.setBackground(new java.awt.Color(255, 102, 102));
@@ -116,22 +121,18 @@ public class MenuMain extends javax.swing.JFrame {
     }//GEN-LAST:event_analizarActionPerformed
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
+         JOptionPane.showMessageDialog(null, "Adios! Nos vemos pronto ");
         System.exit(0);
     }//GEN-LAST:event_jButton3ActionPerformed
 
     private void agregarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_agregarActionPerformed
 
-        try {
-          
+   
             reader.readFile();
-
-            JOptionPane.showMessageDialog(null, "Resumen agregado con exito!");
+           
             
             
-          
-        } catch (Exception e) {
-            JOptionPane.showMessageDialog(null, "Error al leer el txt");
-        }
+      
 
 
     }//GEN-LAST:event_agregarActionPerformed
@@ -141,6 +142,12 @@ public class MenuMain extends javax.swing.JFrame {
         this.setVisible(false);
         b.setVisible(true);
     }//GEN-LAST:event_buscar_por_autorActionPerformed
+
+    private void buscar_por_claveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buscar_por_claveActionPerformed
+        Keywords c = new Keywords();
+        this.setVisible(false);
+        c.setVisible(true);
+    }//GEN-LAST:event_buscar_por_claveActionPerformed
 
     /**
      * @param args the command line arguments

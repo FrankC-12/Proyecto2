@@ -161,7 +161,7 @@ public class Autor extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-         combo1.removeAllItems();
+        combo1.removeAllItems();
         String variable = (String) combo.getSelectedItem();
         try {
             Summary resume = autorcito.get(variable);
